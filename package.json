@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.3",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "save-dev": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,5 +23,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "jquery": "^3.3.1"
+  }
 }

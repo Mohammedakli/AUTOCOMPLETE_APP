@@ -1,28 +1,48 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Autocomplete from  'react-autocomplete';
+import { getStocks, matchStocks } from './data';
 import './App.css';
+import axios from 'axios';
 
 class App extends Component {
+
+  state = { value: '' };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div style = {{ marginTop: 40, marginLeft: 50 }}>
+        <Autocomplete
+          value={ this.state.value }
+          inputProps={{ id: 'states-autocomplete' }}
+          wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+          items={ 
+            axios.get('https://www-uat.tictactrip.eu/api/cities/popular/5')
+            .then(response => {
+              console.log(response.data);
+                return response.data;
+           })
+
+           }
+          getItemValue={ item => item.name }
+          shouldItemRender={ matchStocks }
+          onChange={(event, value) => this.setState({ value }) }
+          onSelect={ value => this.setState({ value }) }
+          renderMenu={ children => (
+            <div className = "menu">
+              { children }
+            </div>
+          )}
+          renderItem={ (item, isHighlighted) => (
+            <div
+              className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+              key={ item.abbr } >
+              { item.name }
+            </div>
+          )}
+        />
       </div>
-    );
+      );
+    }
   }
-}
 
 export default App;
